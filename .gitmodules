@@ -1,0 +1,3 @@
+[submodule "var/webModules"]
+	path = var/webModules
+	url = git@github.com:abcdesktopio/webModules.git

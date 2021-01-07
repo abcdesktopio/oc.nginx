@@ -1,0 +1,71 @@
+
+FROM ubuntu:20.04 
+MAINTAINER Alexandre DEVELY
+RUN DEBIAN_FRONTEND=noninteractive \
+    echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
+    apt-get update  -y  && 	\
+    apt-get upgrade -y  && 	\
+    apt-get install -y   --no-install-recommends 	\
+	openssl			\
+	ca-certificates		\
+	nginx-extras 		\
+	sed 			\
+	luarocks		\
+	gcc			\
+        git			&& \
+    apt-get clean
+
+# git command is used by luarocks install lua-resty-rsa
+
+# install luarocks package 
+RUN DEBIAN_FRONTEND=noninteractive 				\
+	luarocks install lua-resty-jwt 0.2.0-0 		&& 	\
+        luarocks install lua-resty-string 0.09-0	&&	\
+        luarocks install lua-cjson 2.1.0.6-1		&&	\
+        luarocks install lua-resty-rsa 0.04-0 
+
+# for debug only
+# remove in release
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y  --no-install-recommends \
+	net-tools 	\
+	iputils-ping	\
+	curl		\
+	dnsutils        \
+	vim		&& \
+	apt-get clean
+
+RUN 	mkdir -p /var/nginx/cache 	&& 	\
+	mkdir -p /var/nginx/tmp 	&&	\
+	mkdir -p /config 
+COPY var/webModules /var/webModules
+COPY etc/nginx /etc/nginx
+COPY composer /composer
+COPY config.payload.default/ /config.payload.default
+COPY config.signing.default/ /config.signing.default
+
+# Install nodejs
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash  && apt-get clean
+
+RUN apt-get install -y  --no-install-recommends \
+	nodejs 	\
+	make	&& \
+	apt-get clean
+ 
+RUN npm install -g less minify
+
+RUN cd /var/webModules && make -B prod
+
+# Uninstall build packages
+# RUN npm uninstall -g less minify
+#
+#RUN apt-get remove -y nodejs \
+#	make \
+#	unzip \
+#	build-essential \
+#	libreadline-dev \
+#	git
+#
+# RUN apt-get autoremove -y
+
+EXPOSE 80 443 554 8554 9000
+CMD ["/composer/docker-entrypoint.sh"]
