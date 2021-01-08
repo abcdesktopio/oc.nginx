@@ -26,8 +26,8 @@ jobs:
       - name: Clone sources
         run: |
           rm -rf ..?* .[!.]* *
-          git -c http.extraheader="Authorization: basic ${{ secrets.ACCESS_TOKEN }}" clone "https://github.com/${{ secrets.USER_NAME }}/oc.nginx.git" .
-          git -c http.extraheader="Authorization: basic ${{ secrets.ACCESS_TOKEN }}" submodule update --init --recursive --remote
+          git -c http.extraheader="Authorization: basic ${{ secrets.TOKEN }}" clone "https://github.com/${{ secrets.USER_NAME }}/oc.nginx.git" .
+          git -c http.extraheader="Authorization: basic ${{ secrets.TOKEN }}" submodule update --init --recursive --remote
 
       - name: Login to registry
         run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
