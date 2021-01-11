@@ -7,10 +7,7 @@ on:
     branches:
       - main
 env:
-  # TODO: Change variable to your image's name.
-  REPOSITORY_NAME: oc.nginx
   DOCKERFILE_NAME: oc.nginx
-  DOCKER_ORGANIZATION: abcdesktopio
 jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
@@ -44,7 +41,7 @@ jobs:
           file: $DOCKERFILE_NAME
           push: true
           tags: |
-            $DOCKER_ORGANIZATION/$REPOSITORY_NAME:latest
+            abcdesktopio/oc.nginx:latest
 #      - name: Login to registry
 #        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p "${{ secrets.DOCKER_TOKEN }}"
 
