@@ -1,3 +1,4 @@
 [submodule "var/webModules"]
 	path = var/webModules
 	url = https://github.com/abcdesktopio/webModules.git
+	branch = main
