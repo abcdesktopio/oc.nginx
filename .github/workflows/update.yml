@@ -6,13 +6,9 @@ on:
   push:
     branches:
       - main
-
-  # Run tests for any PRs.
-  pull_request:
-
 env:
   # TODO: Change variable to your image's name.
-  IMAGE_NAME: oc.nginx
+  REPOSITORY_NAME: oc.nginx
   DOCKERFILE_NAME: oc.nginx
 
 jobs:
@@ -33,9 +29,9 @@ jobs:
         run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
       - name: Build image
-        run: docker build . --file $DOCKERFILE_NAME --no-cache --tag ${{ secrets.DOCKER_REPOSITORY }}:$IMAGE_NAME
+        run: docker build . --file $DOCKERFILE_NAME --no-cache --tag ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME
 
       - name: Push image then remove it
         run: |
-          docker push ${{ secrets.DOCKER_REPOSITORY }}:$IMAGE_NAME
-          docker rmi ${{ secrets.DOCKER_REPOSITORY }}:$IMAGE_NAME
+          docker push ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME
+          docker rmi ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME
