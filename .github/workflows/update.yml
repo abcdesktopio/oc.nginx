@@ -40,13 +40,3 @@ jobs:
           push: true
           tags: |
             abcdesktopio/oc.nginx:latest
-#      - name: Login to registry
-#        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p "${{ secrets.DOCKER_TOKEN }}"
-
-#      - name: Build image
-#        run: docker build . --file $DOCKERFILE_NAME --no-cache --tag ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME
-
-#      - name: Push image then remove it
-#        run: |
-#         docker push ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME
-#         docker rmi ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME
