@@ -25,13 +25,33 @@ jobs:
           git -c http.extraheader="Authorization: basic ${{ secrets.TOKEN }}" clone "https://github.com/abcdesktopio/oc.nginx.git" .
           git -c http.extraheader="Authorization: basic ${{ secrets.TOKEN }}" submodule update --init --recursive --remote
 
-      - name: Login to registry
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p "${{ secrets.DOCKER_TOKEN }}"
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
 
-      - name: Build image
-        run: docker build . --file $DOCKERFILE_NAME --no-cache --tag ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+ 
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+         username: ${{ secrets.DOCKER_USERNAME }}
+         password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Push image then remove it
-        run: |
-          docker push ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME
-          docker rmi ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: $DOCKERFILE_NAME
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME:latest
+#      - name: Login to registry
+#        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p "${{ secrets.DOCKER_TOKEN }}"
+
+#      - name: Build image
+#        run: docker build . --file $DOCKERFILE_NAME --no-cache --tag ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME
+
+#      - name: Push image then remove it
+#        run: |
+#         docker push ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME
+#         docker rmi ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME
