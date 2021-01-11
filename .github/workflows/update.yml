@@ -44,7 +44,7 @@ jobs:
           file: $DOCKERFILE_NAME
           push: true
           tags: |
-            ${{ secrets.DOCKER_ACCOUNT }}/$REPOSITORY_NAME:latest
+            ${{ secrets.DOCKER_ORGANIZATION }}/$REPOSITORY_NAME:latest
 #      - name: Login to registry
 #        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p "${{ secrets.DOCKER_TOKEN }}"
 
