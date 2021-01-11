@@ -6,8 +6,6 @@ on:
   push:
     branches:
       - main
-env:
-  DOCKERFILE_NAME: oc.nginx
 jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
@@ -38,7 +36,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: $DOCKERFILE_NAME
+          file: oc.nginx
           push: true
           tags: |
             abcdesktopio/oc.nginx:latest
