@@ -17,6 +17,18 @@ else
 fi
 
 
+if [ -z "$JWT_DESKTOP_PAYLOAD_PRIVATE_KEY" ]
+then
+   echo "JWT_DESKTOP_PAYLOAD_PRIVATE_KEY is not defined, settings to default value"
+   JWT_DESKTOP_PAYLOAD_PRIVATE_KEY="/config.payload/abcdesktop_jwt_desktop_payload_private_key.pem"
+fi
+
+if [ -z "$JWT_DESKTOP_SIGNING_PUBLIC_KEY" ]
+then
+   echo "JWT_DESKTOP_SIGNING_PUBLIC_KEY is not defined, settings to default value"
+   JWT_DESKTOP_SIGNING_PUBLIC_KEY="/config.signing/abcdesktop_jwt_desktop_signing_public_key.pem""
+fi
+
 if [ ! -d "/config.signing" ]; then
   mv /config.signing.default /config.signing
 fi
