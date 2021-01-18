@@ -39,4 +39,4 @@ jobs:
           file: oc.nginx
           push: true
           tags: |
-            abcdesktopio/oc.nginx:latest
+            abcdesktopio/oc.nginx:dev
