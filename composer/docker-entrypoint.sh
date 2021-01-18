@@ -26,7 +26,7 @@ fi
 if [ -z "$JWT_DESKTOP_SIGNING_PUBLIC_KEY" ]
 then
    echo "JWT_DESKTOP_SIGNING_PUBLIC_KEY is not defined, settings to default value"
-   JWT_DESKTOP_SIGNING_PUBLIC_KEY="/config.signing/abcdesktop_jwt_desktop_signing_public_key.pem""
+   JWT_DESKTOP_SIGNING_PUBLIC_KEY="/config.signing/abcdesktop_jwt_desktop_signing_public_key.pem"
 fi
 
 if [ ! -d "/config.signing" ]; then
