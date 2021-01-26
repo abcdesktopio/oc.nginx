@@ -39,6 +39,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y  --no-install-recommends \
 RUN 	mkdir -p /var/nginx/cache 	&& 	\
 	mkdir -p /var/nginx/tmp 	&&	\
 	mkdir -p /config 
+
+COPY .git /.git
 COPY var/webModules /var/webModules
 COPY etc/nginx /etc/nginx
 COPY composer /composer
@@ -55,7 +57,10 @@ RUN apt-get install -y  --no-install-recommends \
  
 RUN npm install -g less minify
 
-RUN cd /var/webModules && make -B prod
+RUN apt-get install -y git \
+	&& cd /var/webModules && make -B prod \
+	&& apt-get -y remove git \
+	&& apt-get -y purge git
 
 # Uninstall build packages
 # RUN npm uninstall -g less minify
