@@ -1,6 +1,8 @@
 
 FROM ubuntu:20.04 
-MAINTAINER Alexandre DEVELY
+
+LABEL MAINTAINER="Alexandre DEVELY"
+
 RUN DEBIAN_FRONTEND=noninteractive \
     echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
     apt-get update  -y  && 	\
