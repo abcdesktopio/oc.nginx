@@ -36,7 +36,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: oc.nginx
           push: true
           tags: |
             abcdesktopio/oc.nginx:dev
