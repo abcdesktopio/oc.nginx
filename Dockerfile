@@ -74,5 +74,5 @@ RUN apt-get install -y git \
 #
 # RUN apt-get autoremove -y
 
-EXPOSE 80 443 554 8554 9000
+EXPOSE 80 443
 CMD ["/composer/docker-entrypoint.sh"]
