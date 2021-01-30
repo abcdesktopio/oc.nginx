@@ -1,5 +1,5 @@
 # oc.nginx
-AbcDesktop.io DockerFile Front Web
+abcdesktop.io DockerFile Front Web
 
 ```
 git clone git://github.com/abcdesktopio/oc.nginx
