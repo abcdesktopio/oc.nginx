@@ -40,6 +40,7 @@ RUN 	mkdir -p /var/nginx/cache 	&& 	\
 	mkdir -p /var/nginx/tmp 	&&	\
 	mkdir -p /config 
 
+# makefile use git info, copy .git then remove it
 COPY .git /.git
 COPY var/webModules /var/webModules
 COPY etc/nginx /etc/nginx
@@ -60,7 +61,9 @@ RUN npm install -g less minify
 RUN apt-get install -y git \
 	&& cd /var/webModules && make -B prod \
 	&& apt-get -y remove git \
-	&& apt-get -y purge git
+	&& apt-get -y purge git 
+
+RUN rm -rf /.git 
 
 # Uninstall build packages
 # RUN npm uninstall -g less minify
