@@ -65,7 +65,9 @@ RUN apt-get install -y git \
 
 RUN rm -rf /.git 
 
+#
 # Uninstall build packages
+# Keep this package to support update, make changes on ui.json for example
 # RUN npm uninstall -g less minify
 #
 #RUN apt-get remove -y nodejs \
