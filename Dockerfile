@@ -40,6 +40,7 @@ RUN 	mkdir -p /var/nginx/cache 	&& 	\
 	mkdir -p /var/nginx/tmp 	&&	\
 	mkdir -p /config 
 
+# makefile use git info, copy .git then remove it
 COPY .git /.git
 COPY var/webModules /var/webModules
 COPY etc/nginx /etc/nginx
@@ -68,9 +69,13 @@ RUN yarn global add less minify
 RUN apt-get install -y git \
 	&& cd /var/webModules && make -B prod \
 	&& apt-get -y remove git \
-	&& apt-get -y purge git
+	&& apt-get -y purge git 
 
+RUN rm -rf /.git 
+
+#
 # Uninstall build packages
+# Keep this package to support update, make changes on ui.json for example
 # RUN npm uninstall -g less minify
 #
 #RUN apt-get remove -y nodejs \
@@ -82,5 +87,5 @@ RUN apt-get install -y git \
 #
 # RUN apt-get autoremove -y
 
-EXPOSE 80 443 554 8554 9000
+EXPOSE 80 443
 CMD ["/composer/docker-entrypoint.sh"]
