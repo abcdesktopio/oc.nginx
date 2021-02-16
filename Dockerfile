@@ -50,12 +50,20 @@ COPY config.signing.default/ /config.signing.default
 # Install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash  && apt-get clean
 
+#Install yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
 RUN apt-get install -y  --no-install-recommends \
 	nodejs 	\
 	make	&& \
+	apt update && \
+	apt install yarn && \
 	apt-get clean
- 
-RUN npm install -g less minify
+
+RUN  apt-get clean 
+
+RUN yarn global add less minify
 
 RUN apt-get install -y git \
 	&& cd /var/webModules && make -B prod \
