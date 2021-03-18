@@ -37,4 +37,6 @@ if [ ! -d "/config.payload" ]; then
   mv /config.payload.default /config.payload
 fi
 
+echo "$NODE_NAME" > /var/webModules/node
+
 /usr/sbin/nginx 
