@@ -37,6 +37,12 @@ if [ ! -d "/config.payload" ]; then
   mv /config.payload.default /config.payload
 fi
 
-echo "$NODE_NAME" > /var/webModules/node
+if [ -n "$ABCDESKTOP_DEMO" ]
+	echo 'demo mode is detected'
+	echo 'replace defautl index.html by demo.html file'
+	cp /var/webModules/demo.html /var/webModules/index.html
+fi
+
+echo "$NODE_NAME" > /var/webModules/node.txt
 
 /usr/sbin/nginx 
