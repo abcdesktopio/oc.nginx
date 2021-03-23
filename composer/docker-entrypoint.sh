@@ -45,8 +45,12 @@ else
 	echo 'running standart configuration file'
 fi
 
+# troubleshooting LB 
+# add node node to node.txt
 echo "$NODE_NAME" > /var/webModules/node.txt
 
-env
+# run dump env var
+printenv > /tmp/env.log
 
+# start nginx web server
 /usr/sbin/nginx 
