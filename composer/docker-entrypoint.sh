@@ -41,8 +41,12 @@ if [ -n "$DEMO_ABCDESKTOP_IO" ]; then
 	echo 'demo mode is detected'
 	echo 'replace defautl index.html by demo.html file'
 	cp /var/webModules/demo.html /var/webModules/index.html
+else
+	echo 'running standart configuration file'
 fi
 
 echo "$NODE_NAME" > /var/webModules/node.txt
+
+env
 
 /usr/sbin/nginx 
