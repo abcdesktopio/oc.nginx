@@ -37,7 +37,7 @@ if [ ! -d "/config.payload" ]; then
   mv /config.payload.default /config.payload
 fi
 
-if [ -n "$DEMO_ABCDESKTOP_IO" ]
+if [ -n "$DEMO_ABCDESKTOP_IO" ]; then
 	echo 'demo mode is detected'
 	echo 'replace defautl index.html by demo.html file'
 	cp /var/webModules/demo.html /var/webModules/index.html
