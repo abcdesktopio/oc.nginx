@@ -11,8 +11,9 @@ jobs:
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
   build:
 
-    runs-on: self-hosted
-
+    # runs-on: self-hosted
+    runs-on: ubuntu-latest
+    
     steps:
       - name: Clone sources
         run: |
