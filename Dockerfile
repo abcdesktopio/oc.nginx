@@ -77,15 +77,13 @@ RUN rm -rf /.git
 # Uninstall build packages
 # Keep this package to support update, make changes on ui.json for example
 # RUN npm uninstall -g less minify
-#
-#RUN apt-get remove -y nodejs \
-#	make \
-#	unzip \
-#	build-essential \
-#	libreadline-dev \
-#	git
-#
-# RUN apt-get autoremove -y
+## install git for versionning
+RUN apt-get -y remove 				\
+		git 				\
+		build-essential 		\
+		gcc 				\
+		binutils 			\
+    && apt autoremove -y
 
 EXPOSE 80 443
 CMD ["/composer/docker-entrypoint.sh"]
