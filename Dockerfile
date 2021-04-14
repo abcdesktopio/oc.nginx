@@ -67,7 +67,7 @@ RUN  apt-get clean
 RUN yarn global add less minify
 
 RUN apt-get install -y git \
-        && apt-get install python3.7 \
+        && apt-get install -y python3.7 \
 	&& cd /var/webModules && make -B prod \
 	&& apt-get -y remove git \
 	&& apt-get -y purge git \
