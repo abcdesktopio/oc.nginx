@@ -67,15 +67,9 @@ RUN  apt-get clean
 RUN yarn global add less minify
 
 RUN apt-get install -y git \
-  && apt-get install -y python \
-	&& apt-get install -y g++ \
 	&& cd /var/webModules && make -B prod \
 	&& apt-get -y remove git \
-	&& apt-get -y purge git \
-  && apt-get -y remove python \
-  && apt-get -y purge python \
-	&& apt-get -y remove g++ \
-	&& apt-get -y purge g++
+	&& apt-get -y purge git
 
 RUN rm -rf /.git 
 
