@@ -1,3 +1,6 @@
+
+-- jwt_token MUST be set ngx.var.jwt_token
+-- set $jwt_token          $2;     # jwt contains the encrypted ip address
 local jwt_token = ngx.var.jwt_token
 
 
