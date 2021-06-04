@@ -15,11 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Clone sources
-        run: |
-          rm -rf ..?* .[!.]* *
-          git -c http.extraheader="Authorization: basic ${{ secrets.TOKEN }}" clone "https://github.com/abcdesktopio/oc.nginx.git" .
-          git -c http.extraheader="Authorization: basic ${{ secrets.TOKEN }}" submodule update --init --recursive --remote
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      # - name: Clone sources
+        # run: |
+        #   rm -rf ..?* .[!.]* *
+        #   git -c http.extraheader="Authorization: basic ${{ secrets.TOKEN }}" clone "https://github.com/abcdesktopio/oc.nginx.git" .
+        #   git -c http.extraheader="Authorization: basic ${{ secrets.TOKEN }}" submodule update --init --recursive --remote
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
