@@ -48,6 +48,12 @@ server {
 
 	listen 80 default_server;
 	# listen [::]:80 default_server ipv6only=on;
+	
+	# Sets the bucket size for the variables hash table.
+	variables_hash_bucket_size 128;
+	
+	# Sets the maximum size of the variables hash table
+	variables_hash_max_size 2048;
 
 	root /var/webModules;
 	index index.html index.htm;
