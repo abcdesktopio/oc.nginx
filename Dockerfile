@@ -62,8 +62,6 @@ RUN apt-get install -y  --no-install-recommends \
 	apt install yarn && \
 	apt-get clean
 
-RUN  apt-get clean 
-
 RUN yarn global add less minify
 
 RUN apt-get install -y git \
