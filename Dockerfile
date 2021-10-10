@@ -42,8 +42,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 # need luarocks version 3.x
 # build and install luarocks version 3.x 
 #
-RUN apt-get update      && 	\
-    dpkg -l > a		&&	\					
+RUN apt-get update      			     && \	
     apt-get install -y   				\
 	build-essential			        	\
         git			                        \
@@ -78,8 +77,6 @@ RUN apt-get update      && 	\
     luarocks install lua-resty-string	&& \
     luarocks install lua-cjson		&& \
     luarocks install lua-resty-rsa      && \
-    dpkg -l > b				&& \
-    diff a b 				&& \
     apt-get remove -y	                \
 	build-essential			\
         git			        \
