@@ -30,8 +30,11 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
     && rm -rf /var/lib/apt/lists/*
 
 
-# git command is used by luarocks install lua-resty-rsa
-
+#
+# this is a too log command line 
+# but i didn't find a better way to reduce docker image size
+# and install kuarocks version 3
+#
 # install luarocks package 
 # luarocks version 3.x deb package does not exist in ubuntu
 # luarocks package 
@@ -41,9 +44,10 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 # * lua-resty-rsa   
 # need luarocks version 3.x
 # build and install luarocks version 3.x 
+# git command is used by luarocks install lua-resty-rsa
 #
-RUN apt-get update      			     && \	
-    apt-get install -y   				\
+RUN apt-get update      && 	\
+    apt-get install -y  --no-install-recommends 	\
 	build-essential			        	\
         git			                        \
 	libreadline-dev					\
@@ -52,7 +56,7 @@ RUN apt-get update      			     && \
         liblua5.2-dev                                   \
         liblua5.3-dev  					\
 	zip                                             \
-        unzip                                           \ 
+        unzip                                           \
     &&	\
     wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz --no-check-certificate	&& \
     tar zxpf luarocks-3.3.1.tar.gz		     && \
@@ -66,26 +70,21 @@ RUN apt-get update      			     && \
 	--with-lua-lib=/usr/local/lib 			\
 	--rocks-tree=/usr/local/  			\
     && \		
-    cd luarocks-3.3.1			&& \
-    make linux test			&& \
+    make 				&& \
     make install			&& \
     cd ..				&& \
     rm -rf luarocks-3.3.1		&& \
-    ls -la				&& \
-    && \
+    rm -rf luarocks-3.3.1.tar.gz	&& \
     luarocks install lua-resty-jwt 	&& \
     luarocks install lua-resty-string	&& \
     luarocks install lua-cjson		&& \
     luarocks install lua-resty-rsa      && \
-    apt-get remove -y	                \
-	build-essential			\
-        git			        \
-	libreadline-dev 		\
-	wget				\
-    && apt-get clean			\
-    && rm -rf /var/lib/apt/lists/*
+    apt-get remove -y build-essential git libreadline-dev wget &&				\
+    apt autoremove -y 			&& \
+    apt-get clean			&& \
+    rm -rf /var/lib/apt/lists/*
 
-# luarocks is now installed in version 3.3
+# luarocks is now installed in version 3.3.1
 
 # for debug only
 # remove in release
