@@ -41,7 +41,7 @@ jobs:
           platforms: linux/amd64
           push: true
           build-args: |
-            BASE_IMAGE_RELEASE=21.04
+            BASE_IMAGE_RELEASE=20.04
             BASE_IMAGE=ubuntu
             TAG=dev 
           tags: |
@@ -53,7 +53,7 @@ jobs:
           context: .
           platforms: linux/amd64
           build-args: |
-            BASE_IMAGE_RELEASE=21.04
+            BASE_IMAGE_RELEASE=20.04
             BASE_IMAGE=ubuntu
             TAG=dev 
           push: true
