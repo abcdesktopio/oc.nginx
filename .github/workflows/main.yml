@@ -40,7 +40,11 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          build-args: BASE_IMAGE_RELEASE=20.04, BASE_IMAGE=ubuntu, TAG:dev, BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          build-args: |
+            BASE_IMAGE_RELEASE=20.04
+            BASE_IMAGE=ubuntu
+            TAG:dev 
+            BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
           tags: |
             abcdesktopio/oc.nginx:builder
 
@@ -49,7 +53,11 @@ jobs:
         with:
           context: .
           platforms: linux/amd64
-          build-args: BASE_IMAGE_RELEASE=20.04, BASE_IMAGE=ubuntu, TAG:dev, BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          build-args: |
+            BASE_IMAGE_RELEASE=20.04
+            BASE_IMAGE=ubuntu
+            TAG:dev 
+            BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
           push: true
           tags: |
             abcdesktopio/oc.nginx:dev
