@@ -42,7 +42,8 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 # need luarocks version 3.x
 # build and install luarocks version 3.x 
 #
-RUN apt-get update      && 	                        \
+RUN apt-get update      && 	\
+    dpkg -l > a		&&	\					
     apt-get install -y   				\
 	build-essential			        	\
         git			                        \
@@ -53,10 +54,8 @@ RUN apt-get update      && 	                        \
         liblua5.3-dev  					\
 	zip                                             \
         unzip                                           \ 
-    && apt-get clean					\
-    && rm -rf /var/lib/apt/lists/*
- 
-RUN wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz --no-check-certificate	&& \
+    &&	\
+    wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz --no-check-certificate	&& \
     tar zxpf luarocks-3.3.1.tar.gz		     && \
     cd luarocks-3.3.1				     && \
     ./configure 					\
@@ -66,21 +65,27 @@ RUN wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz --no-check-certific
 	--with-lua=/usr  				\
 	--with-lua-include=/usr/include/lua5.1  	\
 	--with-lua-lib=/usr/local/lib 			\
-	--rocks-tree=/usr/local/  
-	
-RUN cd luarocks-3.3.1				     && \
-    make install					
-    
-RUN	luarocks install lua-resty-jwt 		&& 	\
-        luarocks install lua-resty-string	&&	\
-        luarocks install lua-cjson		&&	\
-        luarocks install lua-resty-rsa       	&&  	\
-    apt-get remove -y	                                \
-	build-essential			  	        \
-        git			                        \
-	libreadline-dev 				\
-	wget						\
-    && apt-get clean					\
+	--rocks-tree=/usr/local/  			\
+    && \		
+    cd luarocks-3.3.1			&& \
+    make linux test			&& \
+    make install			&& \
+    cd ..				&& \
+    rm -rf luarocks-3.3.1		&& \
+    ls -la				&& \
+    && \
+    luarocks install lua-resty-jwt 	&& \
+    luarocks install lua-resty-string	&& \
+    luarocks install lua-cjson		&& \
+    luarocks install lua-resty-rsa      && \
+    dpkg -l > b				&& \
+    diff a b 				&& \
+    apt-get remove -y	                \
+	build-essential			\
+        git			        \
+	libreadline-dev 		\
+	wget				\
+    && apt-get clean			\
     && rm -rf /var/lib/apt/lists/*
 
 # luarocks is now installed in version 3.3
