@@ -64,10 +64,12 @@ RUN wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz --no-check-certific
 	--prefix=/usr  					\
 	--sysconfdir=/etc/luarocks  			\
 	--with-lua=/usr  				\
-	---with-lua-include=/usr/include/lua5.1  	\
+	--with-lua-include=/usr/include/lua5.1  	\
 	--with-lua-lib=/usr/local/lib 			\
-	--rocks-tree=/usr/local/  			\
-    && make install					
+	--rocks-tree=/usr/local/  
+	
+RUN cd luarocks-3.3.1				     && \
+    make install					
     
 RUN	luarocks install lua-resty-jwt 		&& 	\
         luarocks install lua-resty-string	&&	\
