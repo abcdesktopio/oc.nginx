@@ -7,48 +7,88 @@ COPY var/webModules /var/webModules
 # run makefile 
 RUN cd /var/webModules && make -B prod 
 
+# Default release is 20.04
+ARG BASE_IMAGE_RELEASE=20.04
+# Default base image 
+ARG BASE_IMAGE=ubuntu
 
 # --- START Build image ---
-FROM ubuntu:20.04
+FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
 
-RUN DEBIAN_FRONTEND=noninteractive \
-    echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
+# take care do not set --no-install-recommends   
+# lua nginx need install-recommends  
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
     apt-get update      && 	                        \
-    apt-get install -y   --no-install-recommends 	\
+    apt-get install -y   	\
         nginx-extras                                	\
     	sed 			                        \
-    && apt-get clean
+	lua-any						\
+	lua5.1						\	
+	lua5.2        					\
+	lua5.3						\
+    && apt-get clean					\
+    && rm -rf /var/lib/apt/lists/*
 
 
 # git command is used by luarocks install lua-resty-rsa
 
 # install luarocks package 
-RUN DEBIAN_FRONTEND=noninteractive			\
-    apt-get update      && 	                        \
+# luarocks version 3.x deb package does not exist in ubuntu
+# luarocks package 
+# * lua-resty-jwt
+# * lua-resty-string
+# * lua-cjson
+# * lua-resty-rsa   
+# need luarocks version 3.x
+# build and install luarocks version 3.x 
+#
+RUN apt-get update      && 	                        \
     apt-get install -y   --no-install-recommends 	\
-        luarocks		                        \
 	build-essential			        	\
         git			                        \
-    &&                                              	\    
-        luarocks install lua-resty-jwt 0.2.0-0 		&& 	\
-        luarocks install lua-resty-string 0.09-0	&&	\
-        luarocks install lua-cjson 2.1.0.6-1		&&	\
-        luarocks install lua-resty-rsa 0.04-0       	&&  	\
-    apt-get remove -y	                                	\
-        luarocks		                            	\
-	build-essential			  	                \
-        git			                                \
-    && apt-get clean
+	libreadline-dev					\
+	wget 						\
+	liblua5.1-dev                                   \
+        liblua5.2-dev                                   \
+        liblua5.3-dev  					\
+	zip                                             \
+        wget                                            \
+        unzip                                           \ 
+        &&						\                                          	
+	wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz --no-check-certificate	&& \
+   	tar zxpf luarocks-3.3.1.tar.gz					&& \
+   	cd luarocks-3.3.1						&& \
+	./configure 		--lua-version=5.1  		--prefix=/usr  		--sysconfdir=/etc/luarocks  		--with-lua=/usr  		---with-lua-include=/usr/include/lua5.1  		--with-lua-lib=/usr/local/lib 		--rocks-tree=/usr/local/  && \
+        make install					\   
+    &&							\ 
+        luarocks install lua-resty-jwt 		&& 	\
+        luarocks install lua-resty-string	&&	\
+        luarocks install lua-cjson		&&	\
+        luarocks install lua-resty-rsa       	&&  	\
+    apt-get remove -y	                                \
+	build-essential			  	        \
+        git			                        \
+	libreadline-dev 				\
+	wget						\
+    && apt-get clean					\
+    && rm -rf /var/lib/apt/lists/*
+
+# luarocks is now installed in version 3.3
 
 # for debug only
 # remove in release
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y  --no-install-recommends \
+# tools for troubleshooting, but not for prod
+RUN DEBIAN_FRONTEND=noninteractive 			\
+    apt-get update      &&                              \
+    apt-get install -y  --no-install-recommends 	\
 	net-tools 	\
 	iputils-ping	\
+	netcat 		\
 	curl		\
 	dnsutils        \
 	vim		\
-	&& apt-get clean
+    && apt-get clean	\
+    && rm -rf /var/lib/apt/lists/*
 
 RUN 	mkdir -p /var/nginx/cache 	&& 	\
 	mkdir -p /var/nginx/tmp 	&&	\
