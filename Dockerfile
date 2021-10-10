@@ -53,14 +53,23 @@ RUN apt-get update      && 	                        \
         liblua5.3-dev  					\
 	zip                                             \
         unzip                                           \ 
-        &&						\                                          	
-	wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz --no-check-certificate	&& \
-   	tar zxpf luarocks-3.3.1.tar.gz					&& \
-   	cd luarocks-3.3.1						&& \
-	./configure 		--lua-version=5.1  		--prefix=/usr  		--sysconfdir=/etc/luarocks  		--with-lua=/usr  		---with-lua-include=/usr/include/lua5.1  		--with-lua-lib=/usr/local/lib 		--rocks-tree=/usr/local/  && \
-        make install					\   
-    &&							\ 
-        luarocks install lua-resty-jwt 		&& 	\
+    && apt-get clean					\
+    && rm -rf /var/lib/apt/lists/*
+ 
+RUN wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz --no-check-certificate	&& \
+    tar zxpf luarocks-3.3.1.tar.gz		     && \
+    cd luarocks-3.3.1				     && \
+    ./configure 					\
+    	--lua-version=5.1  				\
+	--prefix=/usr  					\
+	--sysconfdir=/etc/luarocks  			\
+	--with-lua=/usr  				\
+	---with-lua-include=/usr/include/lua5.1  	\
+	--with-lua-lib=/usr/local/lib 			\
+	--rocks-tree=/usr/local/  			\
+    && 							\	
+    make install					\   
+RUN	luarocks install lua-resty-jwt 		&& 	\
         luarocks install lua-resty-string	&&	\
         luarocks install lua-cjson		&&	\
         luarocks install lua-resty-rsa       	&&  	\
