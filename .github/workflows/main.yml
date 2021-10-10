@@ -38,7 +38,7 @@ jobs:
         with:
           file: Dockerfile.builder
           context: .
-          platforms: linux/amd64
+          platforms: linux/amd64, linux/arm64, linux/arm/v7
           push: true
           build-args: |
             BASE_IMAGE_RELEASE=20.04
@@ -47,11 +47,11 @@ jobs:
           tags: |
             abcdesktopio/oc.nginx:builder
 
-      - name: Build and push
+      - name: Build and push oc.nginx
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: linux/amd64
+          platforms: linux/amd64, linux/arm64, linux/arm/v7
           build-args: |
             BASE_IMAGE_RELEASE=20.04
             BASE_IMAGE=ubuntu
