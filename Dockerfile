@@ -52,7 +52,6 @@ RUN apt-get update      && 	                        \
         liblua5.2-dev                                   \
         liblua5.3-dev  					\
 	zip                                             \
-        wget                                            \
         unzip                                           \ 
         &&						\                                          	
 	wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz --no-check-certificate	&& \
