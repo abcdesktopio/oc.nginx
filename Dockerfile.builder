@@ -34,14 +34,16 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash  && apt-get clean
 
 #Install yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null
+RUN echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list
 
 RUN apt-get update && \
     apt-get install -y  --no-install-recommends \
         nodejs  \
         yarn    \
         make    \
-        && apt-get clean
+	gcc 	\
+	g++ 	\
+    && apt-get clean
 
 RUN yarn global add less minify
