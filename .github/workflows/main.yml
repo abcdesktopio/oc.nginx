@@ -43,8 +43,7 @@ jobs:
           build-args: |
             BASE_IMAGE_RELEASE=20.04
             BASE_IMAGE=ubuntu
-            TAG:dev 
-            BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+            TAG=dev 
           tags: |
             abcdesktopio/oc.nginx:builder
 
@@ -56,8 +55,7 @@ jobs:
           build-args: |
             BASE_IMAGE_RELEASE=20.04
             BASE_IMAGE=ubuntu
-            TAG:dev 
-            BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+            TAG=dev 
           push: true
           tags: |
             abcdesktopio/oc.nginx:dev
