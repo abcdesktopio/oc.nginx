@@ -43,7 +43,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 # build and install luarocks version 3.x 
 #
 RUN apt-get update      && 	                        \
-    apt-get install -y   --no-install-recommends 	\
+    apt-get install -y   				\
 	build-essential			        	\
         git			                        \
 	libreadline-dev					\
@@ -67,8 +67,8 @@ RUN wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz --no-check-certific
 	---with-lua-include=/usr/include/lua5.1  	\
 	--with-lua-lib=/usr/local/lib 			\
 	--rocks-tree=/usr/local/  			\
-    && 							\	
-    make install					\   
+    && make install					
+    
 RUN	luarocks install lua-resty-jwt 		&& 	\
         luarocks install lua-resty-string	&&	\
         luarocks install lua-cjson		&&	\
