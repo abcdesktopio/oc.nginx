@@ -1,3 +1,8 @@
+# Default release is 20.04
+ARG BASE_IMAGE_RELEASE=20.04
+# Default base image 
+ARG BASE_IMAGE=ubuntu
+
 FROM abcdesktopio/oc.nginx:builder as builder
 
 # copy .git for version
@@ -6,11 +11,6 @@ COPY .git /.git
 COPY var/webModules /var/webModules
 # run makefile 
 RUN cd /var/webModules && make -B prod 
-
-# Default release is 20.04
-ARG BASE_IMAGE_RELEASE=20.04
-# Default base image 
-ARG BASE_IMAGE=ubuntu
 
 # --- START Build image ---
 FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
