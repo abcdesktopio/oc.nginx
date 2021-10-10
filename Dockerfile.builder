@@ -31,7 +31,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
     && apt-get clean
 
 # Install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash  && apt-get clean
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash  && apt-get clean
 
 #Install yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
