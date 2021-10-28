@@ -59,3 +59,6 @@ jobs:
           push: true
           tags: |
             abcdesktopio/oc.nginx:dev
+            
+      - name: output image name
+        run: echo "::set-output name=image::abcdesktopio/oc.nginx:dev"
