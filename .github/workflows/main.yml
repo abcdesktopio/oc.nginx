@@ -10,6 +10,9 @@ jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
   build:
+  
+    outputs:
+      output1: ${{ steps.imagename.outputs.image }}
 
     # runs-on: self-hosted
     runs-on: ubuntu-latest
@@ -60,5 +63,6 @@ jobs:
           tags: |
             abcdesktopio/oc.nginx:dev
             
-      - name: output image name
+      - name: Output image name
+        id: imagename 
         run: echo "::set-output name=image::abcdesktopio/oc.nginx:dev"
