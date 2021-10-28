@@ -9,9 +9,11 @@ on:
 jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
-  build:
   
+  build:
+    
     outputs:
+      description: abcdesktopio/oc.nginx:dev
       output1: ${{ steps.imagename.outputs.image }}
 
     # runs-on: self-hosted
@@ -53,6 +55,7 @@ jobs:
       - name: Build and push oc.nginx
         uses: docker/build-push-action@v2
         with:
+          description: abcdesktopio/oc.nginx:dev
           context: .
           platforms: linux/amd64
           build-args: |
