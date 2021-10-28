@@ -3,11 +3,17 @@
 ![Docker Stars](https://img.shields.io/docker/stars/abcdesktopio/oc.nginx.svg) ![Docker Pulls](https://img.shields.io/docker/pulls/abcdesktopio/oc.nginx.svg)
 
 
-abcdesktop.io DockerFile Front Web
+# abcdesktop.io DockerFile Front Web
 
+## to clone source code 
 ```
 git clone git://github.com/abcdesktopio/oc.nginx
 cd oc.nginx
 git submodule update --init --recursive --remote
 ```
 
+## to build a new oc.nginx container image
+
+```
+docker build  -t abcdesktopio/oc.nginx -f Dockerfile .
+```
