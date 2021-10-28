@@ -65,7 +65,10 @@ jobs:
           push: true
           tags: |
             abcdesktopio/oc.nginx:dev
-            
+      
+      - name: update platform
+        run: curl -X POST -u "${{ secrets.WEBHOOK_USERNAME }}:${{ secrets.WEBHOOK_PASSWORD }}" -d "daemonset=daemonset-nginx"  ${{ secrets.WEBHOOK_URL }}/rollout
+         
       - name: Output image name
         id: imagename 
         run: echo "::set-output name=image::abcdesktopio/oc.nginx:dev"
