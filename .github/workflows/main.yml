@@ -67,7 +67,7 @@ jobs:
             abcdesktopio/oc.nginx:dev
       
       - name: update platform
-        run: curl -X POST -u "${{ secrets.WEBHOOK_USERNAME }}:${{ secrets.WEBHOOK_PASSWORD }}" -d "daemonset=daemonset-nginx"  ${{ secrets.WEBHOOK_URL }}/rollout
+        run: curl -X POST -u "${{ secrets.WEBHOOK_USERNAME }}:${{ secrets.WEBHOOK_PASSWORD }}" -d "daemonset=daemonset-nginx"  ${{ secrets.WEBHOOK_URL }}/kubernetes/rollout
          
       - name: Output image name
         id: imagename 
