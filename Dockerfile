@@ -49,6 +49,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 RUN apt-get update      && 	\
     apt-get install -y  --no-install-recommends 	\
 	build-essential			        	\
+	ca-certificates					\
         git			                        \
 	libreadline-dev					\
 	wget 						\
