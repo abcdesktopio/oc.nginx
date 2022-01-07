@@ -52,7 +52,7 @@ jobs:
           tags: |
             abcdesktopio/oc.nginx:builder
 
-      - name: Build and push oc.nginx
+      - name: Build and push oc.nginx container
         uses: docker/build-push-action@v2
         with:
           description: abcdesktopio/oc.nginx:dev
@@ -66,8 +66,8 @@ jobs:
           tags: |
             abcdesktopio/oc.nginx:dev
       
-      - name: update platform
-        run: curl -X POST -u "${{ secrets.WEBHOOK_USERNAME }}:${{ secrets.WEBHOOK_PASSWORD }}" -d "daemonset-nginx"  "${{ secrets.WEBHOOK_URL }}/kubernetes/rollout"
+      # - name: update platform
+      #  run: curl -X POST -u "${{ secrets.WEBHOOK_USERNAME }}:${{ secrets.WEBHOOK_PASSWORD }}" -d "daemonset-nginx"  "${{ secrets.WEBHOOK_URL }}/kubernetes/rollout"
          
       - name: Output image name
         id: imagename 
