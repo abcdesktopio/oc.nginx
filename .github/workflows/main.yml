@@ -44,7 +44,7 @@ jobs:
           description: abcdesktopio/oc.nginx:builder
           file: Dockerfile.builder
           context: .
-          platforms: linux/amd64, linux/arm64
+          platforms: linux/amd64
           push: true
           build-args: |
             BASE_IMAGE_RELEASE=20.04
@@ -58,7 +58,7 @@ jobs:
         with:
           description: abcdesktopio/oc.nginx:dev
           context: .
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           build-args: |
             BASE_IMAGE_RELEASE=20.04
             BASE_IMAGE=ubuntu
