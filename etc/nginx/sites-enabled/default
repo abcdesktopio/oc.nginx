@@ -72,5 +72,8 @@ server {
         # set_by_lua  $file_service_tcp_port 'return os.getenv("FILE_SERVICE_TCP_PORT")';
         # set_by_lua  $pulseaudio_http_port 'return os.getenv("PULSEAUDIO_HTTP_PORT")';
 
+	#add header 
+	add_header X-Frame-Options "SAMEORIGIN";
+
 	include route.conf;
 }
