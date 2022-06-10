@@ -107,10 +107,18 @@ RUN 	mkdir -p /var/nginx/cache 	&& 	\
 	mkdir -p /config 
 
 # COPY generated web site from builder container
-COPY --from=builder var/webModules /var/webModules
+# copy all files 
+# COPY --from=builder var/webModules /var/webModules 
+# do not copy .git and all .files
+COPY --from=builder var/webModules/* /var/webModules
 
+# copy all nginx configuration files
 COPY etc/nginx /etc/nginx
+
+# copy default abcdesktop docker-entrypoint.sh
 COPY composer /composer
+
+# copy default keys
 COPY config.payload.default/ /config.payload.default
 COPY config.signing.default/ /config.signing.default
 
