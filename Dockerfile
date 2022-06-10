@@ -110,6 +110,7 @@ RUN 	mkdir -p /var/nginx/cache 	&& 	\
 # copy all files 
 # COPY --from=builder var/webModules /var/webModules 
 # do not copy .git and all .files
+RUN mkdir -p /var/webModules
 COPY --from=builder var/webModules/* /var/webModules
 
 # copy all nginx configuration files
