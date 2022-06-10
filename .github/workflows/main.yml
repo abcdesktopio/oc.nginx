@@ -39,9 +39,8 @@ jobs:
          password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Build and push builder container
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
-          description: abcdesktopio/oc.nginx:builder
           file: Dockerfile.builder
           context: .
           platforms: linux/amd64
@@ -54,9 +53,8 @@ jobs:
             abcdesktopio/oc.nginx:builder
 
       - name: Build and push oc.nginx container
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
-          description: abcdesktopio/oc.nginx:dev
           context: .
           platforms: linux/amd64
           build-args: |
