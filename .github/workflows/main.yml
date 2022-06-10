@@ -13,7 +13,6 @@ jobs:
   build:
     
     outputs:
-      description: abcdesktopio/oc.nginx:dev
       output1: ${{ steps.imagename.outputs.image }}
 
     # runs-on: self-hosted
