@@ -10,7 +10,7 @@ COPY .git /.git
 # copy data files
 COPY var/webModules /var/webModules
 # run makefile 
-RUN cd /var/webModules && make -B prod 
+RUN cd /var/webModules && make -B dev 
 
 # --- START Build image ---
 FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
