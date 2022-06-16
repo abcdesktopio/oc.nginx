@@ -109,9 +109,8 @@ RUN 	mkdir -p /var/nginx/cache 	&& 	\
 # COPY generated web site from builder container
 # copy all files 
 # COPY --from=builder var/webModules /var/webModules 
-# do not copy .git and all .files
 RUN mkdir -p /var/webModules
-COPY --from=builder var/webModules/* /var/webModules
+COPY --from=builder var/webModules /var/webModules
 
 # copy all nginx configuration files
 COPY etc/nginx /etc/nginx
