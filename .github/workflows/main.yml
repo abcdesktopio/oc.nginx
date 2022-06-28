@@ -63,6 +63,19 @@ jobs:
           push: true
           tags: |
             abcdesktopio/oc.nginx:dev
+            
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'docker.io/abcdesktopio/oc.nginx:dev'
+          format: 'sarif'
+          output: 'oc-nginx-trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'oc-nginx-trivy-results.sarif'
       
       # - name: update platform
       #  run: curl -X POST -u "${{ secrets.WEBHOOK_USERNAME }}:${{ secrets.WEBHOOK_PASSWORD }}" -d "daemonset-nginx"  "${{ secrets.WEBHOOK_URL }}/kubernetes/rollout"
