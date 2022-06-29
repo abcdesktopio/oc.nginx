@@ -90,17 +90,17 @@ RUN apt-get update      && 	\
 # for debug only
 # remove in release
 # tools for troubleshooting, but not for prod
-RUN DEBIAN_FRONTEND=noninteractive 			\
-    apt-get update      &&                              \
-    apt-get install -y  --no-install-recommends 	\
-	net-tools 	\
-	iputils-ping	\
-	netcat 		\
-	curl		\
-	dnsutils        \
-	vim		\
-    && apt-get clean	\
-    && rm -rf /var/lib/apt/lists/*
+# RUN DEBIAN_FRONTEND=noninteractive 			\
+#    apt-get update      &&                              \
+#    apt-get install -y  --no-install-recommends 	\
+#	net-tools 	\
+#	iputils-ping	\
+#	netcat 		\
+#	curl		\
+#	dnsutils        \
+#	vim		\
+#   && apt-get clean	\
+#    && rm -rf /var/lib/apt/lists/*
 
 RUN 	mkdir -p /var/nginx/cache 	&& 	\
 	mkdir -p /var/nginx/tmp 	&&	\
