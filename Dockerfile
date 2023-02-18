@@ -10,6 +10,7 @@ COPY .git /.git
 # copy data files
 COPY var/webModules /var/webModules
 # run makefile 
+RUN cd /var/webModules && npm install
 RUN cd /var/webModules && make dev 
 
 # --- START Build image ---
