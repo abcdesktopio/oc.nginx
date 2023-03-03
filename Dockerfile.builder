@@ -32,13 +32,22 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 	dpkg						\
 	python						\
 	python3						\
+	devscripts 					\
+	wget 						\
+	ca-certificates					\
     && apt-get clean					\
     && rm -rf /var/lib/apt/lists/
 
 # Install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash && \
-    curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && apt-get install -y yarn
+# RUN curl -sL https://deb.nodesource.com/setup_16.x | bash && \
+#     curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null && \
+#     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list && \ apt-get update && apt-get install -y yarn
+
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs 
+# RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+# RUN apt-get update && apt-get install -y yarn
+RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null
+RUN echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install -y yarn
 
 RUN yarn global add less minify
