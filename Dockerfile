@@ -8,7 +8,9 @@ FROM abcdesktopio/oc.nginx:builder as builder
 # copy .git for version
 COPY .git /.git
 # copy data files
-COPY var/webModules /var/webModules
+# COPY var/webModules /var/webModules
+RUN cd /var && git clone https://github.com/abcdesktopio/webModules.git
+#
 # run makefile 
 RUN cd /var/webModules && npm install
 RUN cd /var/webModules && make dev 
