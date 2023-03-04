@@ -14,6 +14,9 @@ RUN cd /var && git clone https://github.com/abcdesktopio/webModules.git
 # run makefile 
 RUN cd /var/webModules && npm install
 RUN cd /var/webModules && make dev 
+RUN cd /var/webModules && make untranspile
+# RUN cd /var/webModules/transpile && npm audit fix
+RUN cd /var/webModules && npm audit fix
 
 # --- START Build image ---
 FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
