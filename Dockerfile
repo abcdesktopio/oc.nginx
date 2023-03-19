@@ -25,7 +25,8 @@ FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
 # lua nginx need install-recommends  
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
     apt-get update      && 	                        \
-    apt-get install -y   	\
+    apt-get upgrade -y  && 	                        \
+    apt-get install -y   				\
         nginx-extras                                	\
     	sed 			                        \
 	lua-any						\
