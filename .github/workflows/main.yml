@@ -21,11 +21,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        
-      - name: Checkout tools repo
-        uses: actions/checkout@v3
-        with:
-         repository: abcdesktopio/webModules
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -56,6 +51,7 @@ jobs:
       - name: Build and push oc.nginx container
         uses: docker/build-push-action@v3
         with:
+          file: Dockerfile
           context: .
           platforms: linux/amd64
           build-args: |
