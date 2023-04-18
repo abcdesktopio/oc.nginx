@@ -13,8 +13,12 @@ else
         # replace pyos 		by FQDN pyos.default.svc.cluster.local
 	# sed -i "s/127.0.0.11/kube-dns.kube-system.svc.cluster.local./g" 	/etc/nginx/sites-enabled/default 
 	RESOLVER=$(grep -m 1 nameserver /etc/resolv.conf | awk '{ print $2 }')
-        sed -i "s/127.0.0.11/$RESOLVER/g" /etc/nginx/sites-enabled/default
-	sed -i "s/pyos/pyos.abcdesktop.svc.cluster.local./g" 			/etc/nginx/sites-enabled/default
+	cp /etc/nginx/sites-enabled/default /tmp/default
+        sed -i "s/127.0.0.11/$RESOLVER/g" /tmp/default
+	sed -i "s/pyos/pyos.abcdesktop.svc.cluster.local./g" /tmp/default
+	echo New site configuration
+	cp  /tmp/default /etc/nginx/sites-enabled/default
+	cat /etc/nginx/sites-enabled/default
 	PYOS=pyos.abcdesktop.svc.cluster.local.
 fi
 
