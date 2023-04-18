@@ -44,7 +44,7 @@ server {
 	resolver 127.0.0.11 ipv6=off;  # DNS in docker mode
 	
 	set $my_speedtest	'speedtest';
-	set $my_proxy  		'pyos';
+	set $my_proxy  		'pyos.abcdesktop.svc.cluster.local';
 
 	listen 80 default_server;
 	# listen [::]:80 default_server ipv6only=on;
