@@ -53,7 +53,7 @@ jobs:
         with:
           file: Dockerfile
           context: .
-          platforms: linux/amd64
+          platforms: linux/amd64, linux/arm64
           build-args: |
             BASE_IMAGE_RELEASE=20.04
             BASE_IMAGE=ubuntu
