@@ -1,5 +1,5 @@
 # Default release is 20.04
-ARG BASE_IMAGE_RELEASE=20.04
+ARG BASE_IMAGE_RELEASE=22.04
 # Default base image 
 ARG BASE_IMAGE=ubuntu
 
@@ -55,40 +55,12 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 # git command is used by luarocks install lua-resty-rsa
 #
 RUN apt-get update      && 	\
-    apt-get install -y  --no-install-recommends 	\
-	build-essential			        	\
-	ca-certificates					\
-        git			                        \
-	libreadline-dev					\
-	wget 						\
-	liblua5.1-dev                                   \
-        liblua5.2-dev                                   \
-        liblua5.3-dev  					\
-	zip                                             \
-        unzip                                           \
-    &&	\
-    wget https://luarocks.org/releases/luarocks-3.3.1.tar.gz --no-check-certificate	&& \
-    tar zxpf luarocks-3.3.1.tar.gz		     && \
-    cd luarocks-3.3.1				     && \
-    ./configure 					\
-    	--lua-version=5.1  				\
-	--prefix=/usr  					\
-	--sysconfdir=/etc/luarocks  			\
-	--with-lua=/usr  				\
-	--with-lua-include=/usr/include/lua5.1  	\
-	--with-lua-lib=/usr/local/lib 			\
-	--rocks-tree=/usr/local/  			\
-    && \		
-    make 				&& \
-    make install			&& \
-    cd ..				&& \
-    rm -rf luarocks-3.3.1		&& \
-    rm -rf luarocks-3.3.1.tar.gz	&& \
+    apt-get install -y  	\
+    	luarocks			&& \
     luarocks install lua-resty-jwt 	&& \
     luarocks install lua-resty-string	&& \
     luarocks install lua-cjson		&& \
     luarocks install lua-resty-rsa      && \
-    apt-get remove -y build-essential git libreadline-dev wget &&				\
     apt autoremove -y 			&& \
     apt-get clean			&& \
     rm -rf /var/lib/apt/lists/*
