@@ -12,7 +12,7 @@ COPY .git /.git
 RUN cd /var && git clone https://github.com/abcdesktopio/webModules.git
 #
 # run makefile 
-RUN cd /var/webModules && npm install
+RUN cd /var/webModules && make install
 RUN cd /var/webModules && make updatejs
 RUN cd /var/webModules && make dev 
 # RUN cd /var/webModules && make untranspile
