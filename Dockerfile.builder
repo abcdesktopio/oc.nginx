@@ -30,7 +30,6 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 	ca-certificates					\
 	curl						\
 	dpkg						\
-	python						\
 	python3						\
 	devscripts 					\
 	wget 						\
