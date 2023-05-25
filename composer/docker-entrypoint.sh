@@ -60,4 +60,5 @@ echo "$NODE_NAME" > /var/webModules/node.txt
 printenv > /tmp/env.log
 
 # start nginx web server
-/usr/sbin/nginx 
+#/usr/sbin/nginx
+/usr/local/openresty/nginx/sbin/nginx -p /etc/nginx -c nginx.conf -e /var/log/nginx/error.log
