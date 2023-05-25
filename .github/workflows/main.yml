@@ -55,7 +55,7 @@ jobs:
           context: .
           platforms: linux/amd64, linux/arm64
           build-args: |
-            BASE_IMAGE_RELEASE=22.04
+            BASE_IMAGE_RELEASE=20.04
             BASE_IMAGE=ubuntu
             TAG=dev 
           push: true
