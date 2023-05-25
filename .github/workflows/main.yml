@@ -55,12 +55,12 @@ jobs:
           context: .
           platforms: linux/amd64, linux/arm64
           build-args: |
-            BASE_IMAGE_RELEASE=20.04
-            BASE_IMAGE=ubuntu
+            BASE_IMAGE_RELEASE=jammy
+            BASE_IMAGE=openresty/openresty
             TAG=dev 
           push: true
           tags: |
-            abcdesktopio/oc.nginx:dev
+            abcdesktopio/oc.nginx:dev3.0
             
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
