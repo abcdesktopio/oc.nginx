@@ -13,8 +13,13 @@ else
         # replace pyos 		by FQDN pyos.default.svc.cluster.local
 	# sed -i "s/127.0.0.11/kube-dns.kube-system.svc.cluster.local./g" 	/etc/nginx/sites-enabled/default 
 	RESOLVER=$(grep -m 1 nameserver /etc/resolv.conf | awk '{ print $2 }')
-        sed -i "s/127.0.0.11/$RESOLVER/g" /etc/nginx/sites-enabled/default
-	sed -i "s/pyos/pyos.abcdesktop.svc.cluster.local./g" 			/etc/nginx/sites-enabled/default
+	echo Resolver for nginx is $RESOLVER
+	cp /etc/nginx/sites-enabled/default /tmp/default
+        sed -i "s/127.0.0.11/$RESOLVER/g" /tmp/default
+	# sed -i "s/pyos/pyos.abcdesktop.svc.cluster.local./g" /tmp/default
+	echo New site configuration
+	cp  /tmp/default /etc/nginx/sites-enabled/default
+	cat /etc/nginx/sites-enabled/default
 	PYOS=pyos.abcdesktop.svc.cluster.local.
 fi
 
@@ -41,7 +46,7 @@ fi
 
 if [ -n "$DEMO_ABCDESKTOP_IO" ]; then
 	echo 'demo mode is detected'
-	echo 'replace defautl index.html by demo.html file'
+	echo 'replace file index.html by demo.html'
 	cp /var/webModules/demo.html /var/webModules/index.html
 else
 	echo 'running standart configuration file'

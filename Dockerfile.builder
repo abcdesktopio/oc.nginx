@@ -1,5 +1,5 @@
 # Default release is 20.04
-ARG BASE_IMAGE_RELEASE=20.04
+ARG BASE_IMAGE_RELEASE=22.04
 # Default base image 
 ARG BASE_IMAGE=ubuntu
 
@@ -30,7 +30,6 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 	ca-certificates					\
 	curl						\
 	dpkg						\
-	python						\
 	python3						\
 	devscripts 					\
 	wget 						\

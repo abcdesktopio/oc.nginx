@@ -12,9 +12,13 @@ COPY .git /.git
 RUN cd /var && git clone https://github.com/abcdesktopio/webModules.git
 #
 # run makefile 
+# RUN cd /var/webModules/transpile && npm audit fix
+RUN cd /var/webModules && make updatejs
 RUN cd /var/webModules && make install
 RUN cd /var/webModules && make dev 
+# RUN cd /var/webModules && make untranspile
 # RUN cd /var/webModules/transpile && npm audit fix
+RUN cd /var/webModules && npm i --package-lock-only && npm audit fix
 
 # --- START Build image ---
 FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
@@ -87,7 +91,7 @@ RUN apt-get update      && 	\
     luarocks install lua-resty-rsa      && \
     apt-get remove -y build-essential git libreadline-dev wget &&				\
     apt autoremove -y 			&& \
-    apt-get clean			&& \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # luarocks is now installed in version 3.3.1
