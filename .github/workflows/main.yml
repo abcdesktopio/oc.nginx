@@ -14,7 +14,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env: 
-      imagetag: ${{ github.head_ref || github.ref_name || 'dev' }}
+      # imagetag: ${{ github.head_ref || github.ref_name || 'dev' }}
+      imagetag: '3.0'
     outputs:
       output1: ${{ steps.imagename.outputs.image }}
     steps:
