@@ -17,7 +17,7 @@ RUN cd /var/webModules && make updatejs
 RUN cd /var/webModules && make dev 
 # RUN cd /var/webModules && make untranspile
 # RUN cd /var/webModules/transpile && npm audit fix
-RUN cd /var/webModules && npm i --package-lock-only && npm audit fix
+# RUN cd /var/webModules && npm i --package-lock-only && npm audit fix
 
 
 
