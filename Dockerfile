@@ -15,10 +15,11 @@ RUN cd /var && git clone https://github.com/abcdesktopio/webModules.git
 RUN cd /var/webModules && make install
 RUN cd /var/webModules && make updatejs
 RUN cd /var/webModules && make dev 
+RUN cd /var/webModules && ./mkversion.sh
+
 # RUN cd /var/webModules && make untranspile
 # RUN cd /var/webModules/transpile && npm audit fix
 # RUN cd /var/webModules && npm i --package-lock-only && npm audit fix
-
 
 
 # --- START Build image ---
