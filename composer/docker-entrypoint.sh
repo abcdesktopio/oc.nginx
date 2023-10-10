@@ -1,29 +1,5 @@
 #!/bin/bash
 
-PYOS=pyos
-
-# check if the the container is running inside a KUBERNETES
-# by testing the env $KUBERNETES_SERVICE_HOST
-if [ -z "$KUBERNETES_SERVICE_HOST" ]
-then
-	echo 'Kubernetes is not detected' 
-	echo 'Using default config file'
-else
-	# replace 127.0.0.11 	by FQDN kube-dns.kube-system.svc.cluster.local
-        # replace pyos 		by FQDN pyos.default.svc.cluster.local
-	# sed -i "s/127.0.0.11/kube-dns.kube-system.svc.cluster.local./g" 	/etc/nginx/sites-enabled/default 
-	RESOLVER=$(grep -m 1 nameserver /etc/resolv.conf | awk '{ print $2 }')
-	echo Resolver for nginx is $RESOLVER
-	cp /etc/nginx/sites-enabled/default /tmp/default
-        sed -i "s/127.0.0.11/$RESOLVER/g" /tmp/default
-	# sed -i "s/pyos/pyos.abcdesktop.svc.cluster.local./g" /tmp/default
-	echo New site configuration
-	cp  /tmp/default /etc/nginx/sites-enabled/default
-	cat /etc/nginx/sites-enabled/default
-	PYOS=pyos.abcdesktop.svc.cluster.local.
-fi
-
-
 if [ -z "$JWT_DESKTOP_PAYLOAD_PRIVATE_KEY" ]
 then
    echo "JWT_DESKTOP_PAYLOAD_PRIVATE_KEY is not defined, settings to default value"
