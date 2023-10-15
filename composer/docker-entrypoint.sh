@@ -47,7 +47,7 @@ else
   echo "to start nginx"
   echo "kubectl exec -n abcdesktop -it daemonset/daemonset-nginx  -- bash"
   echo "then run the command inside the container"
-  echo "/usr/local/openresty/nginx/sbin/nginx -p /etc/nginx -c nginx.conf"
+  echo "/usr/local/openresty/nginx/sbin/nginx -p /etc/nginx -c nginx.conf -e /var/log/nginx/error.log"
   echo "this container will sleep for a day"
   sleep 1d
 fi
