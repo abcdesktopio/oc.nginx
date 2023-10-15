@@ -31,7 +31,7 @@ RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt && \
     /usr/local/openresty/luajit/bin/luarocks install lua-cjson && \
     /usr/local/openresty/luajit/bin/luarocks install lua-resty-rsa
 
-RUN mkdir -p /var/nginx/cache /var/nginx/tmp /config /var/log/nginx
+RUN mkdir -p /var/nginx/cache /var/nginx/tmp /config /var/log/nginx /etc/nginx/logs/
 
 # COPY generated html file web site from builder container
 # copy all files 
