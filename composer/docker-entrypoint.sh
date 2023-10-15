@@ -35,6 +35,21 @@ echo "$NODE_NAME" > /var/webModules/node.txt
 # run dump env var
 printenv > /tmp/env.log
 
+# DEBUG_MODE env var is set
+# do not start nginx server 
+if [ -z "$DEBUG_MODE" ]; then
+  # to start nginx 
+  # kubectl exec -n abcdesktop -it daemonset/daemonset-nginx  -- bash
+  # /usr/local/openresty/nginx/sbin/nginx -p /etc/nginx -c nginx.conf 
+  echo "DEBUG_MODE env var is set"
+  echo "to start nginx"
+  echo "kubectl exec -n abcdesktop -it daemonset/daemonset-nginx  -- bash"
+  echo "then run the command inside the container"
+  echo "/usr/local/openresty/nginx/sbin/nginx -p /etc/nginx -c nginx.conf"
+  echo "this container will sleep for a day"
+  sleep 1d
+fi
+
 # start nginx web server
 #/usr/sbin/nginx
 /usr/local/openresty/nginx/sbin/nginx -p /etc/nginx -c nginx.conf -e /var/log/nginx/error.log
