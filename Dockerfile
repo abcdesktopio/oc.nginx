@@ -2,6 +2,8 @@
 ARG BASE_IMAGE_RELEASE=jammy
 # Default base image 
 ARG BASE_IMAGE=openresty/openresty
+# default branch
+ARG BRANCH=main
 
 FROM abcdesktopio/oc.nginx:builder as builder
 
@@ -9,7 +11,7 @@ FROM abcdesktopio/oc.nginx:builder as builder
 COPY .git /.git
 # copy data files
 # COPY var/webModules /var/webModules
-RUN cd /var && git clone https://github.com/abcdesktopio/webModules.git
+RUN cd /var && git clone -b $BRANCH https://github.com/abcdesktopio/webModules.git
 #
 # run makefile 
 RUN cd /var/webModules && make install
