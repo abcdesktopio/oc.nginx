@@ -2,10 +2,14 @@
 ARG BASE_IMAGE_RELEASE=jammy
 # Default base image 
 ARG BASE_IMAGE=openresty/openresty
+
+FROM abcdesktopio/oc.nginx:builder as builder
+
 # default branch
 ARG BRANCH=main
 
-FROM abcdesktopio/oc.nginx:builder as builder
+# convert ARG to ENV with same name
+ENV BRANCH=$BRANCH
 
 # copy .git for version
 COPY .git /.git
