@@ -6,14 +6,21 @@
 # abcdesktop.io DockerFile Front Web
 
 ## to clone source code 
+
 ```
-git clone git://github.com/abcdesktopio/oc.nginx
-cd oc.nginx
-git submodule update --init --recursive --remote
+git clone https://github.com/abcdesktopio/oc.nginx.git
 ```
 
 ## to build a new oc.nginx container image
 
+### using branch=main 
+
 ```
-docker build  -t abcdesktopio/oc.nginx -f Dockerfile .
+docker buildx build --build-arg BRANCH=main --build-arg BASE_IMAGE_RELEASE=jammy --build-arg BASE_IMAGE=openresty/openresty --file Dockerfile  .
+```
+
+### using branch=3.2 
+
+```
+docker buildx build --build-arg BRANCH=3.2 --build-arg BASE_IMAGE_RELEASE=jammy --build-arg BASE_IMAGE=openresty/openresty --file Dockerfile  .
 ```
