@@ -13,11 +13,16 @@ ENV BRANCH=$BRANCH
 
 # copy .git for version
 COPY .git /.git
+
 # copy data files
 # COPY var/webModules /var/webModules
+RUN echo clone branch ${BRANCH}
 RUN cd /var && git clone -b $BRANCH https://github.com/abcdesktopio/webModules.git
+
 #
-# run makefile 
+# run makefile step by step 
+# to get troubleshooting data
+#
 RUN cd /var/webModules && make install
 RUN cd /var/webModules && make updatejs
 RUN cd /var/webModules && make dev 
