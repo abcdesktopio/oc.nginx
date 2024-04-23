@@ -6,7 +6,7 @@ ARG BASE_IMAGE=openresty/openresty
 FROM abcdesktopio/oc.nginx:builder as builder
 
 # default branch
-ARG BRANCH=main
+ARG BRANCH=3.2
 
 # convert ARG to ENV with same name
 ENV BRANCH=$BRANCH
