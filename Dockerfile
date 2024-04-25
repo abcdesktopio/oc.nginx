@@ -1,9 +1,9 @@
 # Default release is 20.04
 ARG BASE_IMAGE_RELEASE=jammy
 # Default base image 
-ARG BASE_IMAGE=openresty/openresty
+ARG BASE_IMAGE=ubuntu
 
-FROM abcdesktopio/oc.nginx:builder as builder
+FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE as builder
 
 # default branch
 ARG BRANCH=3.2
@@ -11,17 +11,43 @@ ARG BRANCH=3.2
 # convert ARG to ENV with same name
 ENV BRANCH=$BRANCH
 
-# copy .git for version
-COPY .git /.git
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
+    apt-get update  -y && \
+    apt-get install -y --no-install-recommends \
+	build-essential			                \
+        git			                        \
+	gnupg						\
+	ca-certificates					\
+	curl						\
+	dpkg						\
+	python3						\
+	devscripts 					\
+	wget 						\
+	ca-certificates					\
+    && apt-get clean					\
+    && rm -rf /var/lib/apt/lists/
 
-# copy data files
-# COPY var/webModules /var/webModules
+# install yarn npm nodejs
+ENV NODE_MAJOR=18 
+RUN  mkdir -p /etc/apt/keyrings && \
+     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+     apt-get update && \
+     apt-get install -y --no-install-recommends nodejs && \
+     npm -g install yarn && \
+     apt-get clean && \
+     rm -rf /var/lib/apt/lists/
+
+RUN yarn global add less minify
+
+
+# copy data files from abcdesktopio/webModules repo
 RUN echo clone branch ${BRANCH}
 RUN cd /var && git clone -b $BRANCH https://github.com/abcdesktopio/webModules.git
 
 #
 # run makefile step by step 
-# to get troubleshooting data
+# to get troubleshooting info
 #
 RUN cd /var/webModules && make install
 RUN cd /var/webModules && make updatejs
@@ -34,30 +60,6 @@ RUN cd /var/webModules && ./mkversion.sh
 
 
 # --- START Build image ---
-FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
-# FROM openresty/openresty:jammy
-
-RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt && \
-    /usr/local/openresty/luajit/bin/luarocks install lua-resty-string && \
-    /usr/local/openresty/luajit/bin/luarocks install lua-cjson && \
-    /usr/local/openresty/luajit/bin/luarocks install lua-resty-rsa
-
-RUN mkdir -p /var/nginx/cache /var/nginx/tmp /config /var/log/nginx /etc/nginx/logs/
-
-# COPY generated html file web site from builder container
-# copy all files 
-RUN mkdir -p /var/webModules
-COPY --from=builder var/webModules /var/webModules
-
-# copy all nginx configuration files
-COPY etc/nginx /etc/nginx
-
-# copy default abcdesktop docker-entrypoint.sh
-COPY composer /composer
-
-# copy default keys
-COPY config.payload.default/ /config.payload.default
-COPY config.signing.default/ /config.signing.default
-
-EXPOSE 80 443
-CMD ["/composer/docker-entrypoint.sh"]
+FROM nginx
+COPY --from=builder var/webModules /usr/share/nginx/html
+EXPOSE 80 

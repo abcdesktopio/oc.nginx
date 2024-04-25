@@ -1,29 +1,18 @@
-# Default release is 20.04
-ARG BASE_IMAGE_RELEASE=20.04
+ARG BASE_IMAGE_RELEASE=jammy
 # Default base image 
 ARG BASE_IMAGE=ubuntu
 
-# --- START Build image ---
-FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
+FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE as builder
 
-#
-# This docker file is a builder docker file
-# this is like a makefile inside a container image 
-# this image is used for oc.nginx 
-# to build oc.nginx docker file 
-#
-# Install all build tools like 
-# build-essential
-# * nodejs 
-# * yarn 
-# * lessc
-# * git 
-# * make
-#
+# default branch
+ARG BRANCH=3.2
+
+# convert ARG to ENV with same name
+ENV BRANCH=$BRANCH
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
-    apt-get update  -y  && 	                        \
-    apt-get install -y   				\
+    apt-get update  -y && \
+    apt-get install -y --no-install-recommends \
 	build-essential			                \
         git			                        \
 	gnupg						\
@@ -37,16 +26,15 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
     && apt-get clean					\
     && rm -rf /var/lib/apt/lists/
 
-# Install nodejs
-# RUN curl -sL https://deb.nodesource.com/setup_16.x | bash && \
-#     curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null && \
-#     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list && \ apt-get update && apt-get install -y yarn
-
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs 
-# RUN curl -o- -L https://yarnpkg.com/install.sh | bash
-# RUN apt-get update && apt-get install -y yarn
-RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null
-RUN echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -y yarn
+# install yarn npm nodejs
+ENV NODE_MAJOR=18 
+RUN  mkdir -p /etc/apt/keyrings && \
+     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+     apt-get update && \
+     apt-get install -y --no-install-recommends nodejs && \
+     npm -g install yarn && \
+     apt-get clean && \
+     rm -rf /var/lib/apt/lists/
 
 RUN yarn global add less minify
