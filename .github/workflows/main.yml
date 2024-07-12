@@ -61,7 +61,7 @@ jobs:
           context: .
           platforms: linux/amd64, linux/arm64
           build-args: |
-            BRANCH=${{ env.imagetag }}
+            BRANCH=${{ env.ref }}
             BASE_IMAGE_RELEASE=jammy
             BASE_IMAGE=openresty/openresty
           push: true
