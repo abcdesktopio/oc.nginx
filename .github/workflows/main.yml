@@ -43,6 +43,7 @@ jobs:
           platforms: linux/amd64, linux/arm64
           push: true
           build-args: |
+            BRANCH=${{ env.imagetag }}
             BASE_IMAGE_RELEASE=22.04
             BASE_IMAGE=ubuntu
           tags: |
