@@ -4,11 +4,6 @@ ARG BASE_IMAGE=ubuntu
 
 FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE as builder
 
-# default branch
-ARG BRANCH=3.2
-
-# convert ARG to ENV with same name
-ENV BRANCH=$BRANCH
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
     apt-get update  -y && \
