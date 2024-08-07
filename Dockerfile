@@ -1,5 +1,7 @@
-ARG BRANCH
 FROM abcdesktopio/oc.nginx:builder as builder
+
+# default branch
+ARG BRANCH=3.3
 
 # convert ARG to ENV with same name
 ENV BRANCH=$BRANCH
