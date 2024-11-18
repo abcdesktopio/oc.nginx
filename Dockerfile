@@ -1,4 +1,4 @@
-FROM abcdesktopio/oc.nginx:builder as builder
+FROM abcdesktopio/oc.nginx:builder AS builder
 
 # default branch
 ARG BRANCH=3.3
